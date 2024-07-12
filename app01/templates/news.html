@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日新闻</title>
+</head>
+<body>
+<h1>今日新闻</h1>
+<ul>
+    {% for item in subjects %}
+        <li>{{ item.title }}  评分：{{ item.rate }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
