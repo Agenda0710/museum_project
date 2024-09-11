@@ -36,5 +36,6 @@ urlpatterns = [
     path('deleteCategory/<int:id>/', views.deleteCategory),
     path('getAllUsers/', views.getAllUsers),
     path('predict/', PredictVisitorsView.as_view(), name='predict_visitors'),
+    path('getWordCloudData/', views.get_word_cloud_data),
 
 ]

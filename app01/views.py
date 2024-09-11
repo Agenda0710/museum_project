@@ -15,6 +15,7 @@ import json
 import numpy as np
 
 from .models import *
+from DrissionPage import ChromiumOptions, ChromiumPage
 
 # Create your views here. 调用函数,经常动
 
@@ -298,3 +299,20 @@ class PredictVisitorsView(View):
         visitors = model.predict(input_data)[0]
 
         return JsonResponse({'visitors': int(visitors)})
+
+
+def get_word_cloud_data(request):
+    path = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
+    ChromiumOptions().set_browser_path(path).save()
+
+    driver = ChromiumPage()
+    driver.listen.start('aweme/v1/web/general/search/single')
+    driver.get('https://www.douyin.com/search/%E4%B8%8A%E6%B5%B7%E5%8D%9A%E7%89%A9%E9%A6%86?aid=ce84e266-d0cb-4335-9465-7770ebb33b9e&type=general')
+
+    response = driver.listen.wait()
+    json_data = response.response.body
+
+    key_words = json_data['guide_search_words']
+    word_list = [index['word'] for index in key_words]
+
+    return JsonResponse(word_list, safe=False)
